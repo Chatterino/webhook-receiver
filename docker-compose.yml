@@ -1,0 +1,25 @@
+services:
+  api:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - WEBHOOK_RECEIVER_DSN=postgres://${PG_USER:-api}:${PG_PASS:-api}@db:5432/${PG_USER:-api}
+    env_file: .env
+    ports:
+      - "${API_PORT:-1235}:1235"
+    volumes:
+      - $PWD/migrations:/migrations
+  db:
+    image: postgres:16-alpine
+    restart: always
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${PG_USER:-api}
+      - POSTGRES_PASSWORD=${PG_PASS:-api}
+    volumes:
+      - db:/var/lib/postgresql/data
+
+
+volumes:
+  db:
