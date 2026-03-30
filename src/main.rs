@@ -4,7 +4,7 @@ use actix_web::{
     http::header::{Header, HeaderName, HeaderValue, InvalidHeaderValue, TryIntoHeaderValue},
     post, web,
 };
-use hmac::{Hmac, Mac};
+use hmac::{Hmac, KeyInit, Mac};
 use sha2::Sha256;
 use sqlx::PgPool;
 
